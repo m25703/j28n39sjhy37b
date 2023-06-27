@@ -9,7 +9,7 @@ function App() {
     justifyContent: 'center',
     alignItems: 'center'}}>
       <Router>
-        <Link to="/createpost"> Create A post</Link>
+        <Link to="/createpost"> Create Card</Link>
         <Link to="/"> Home Page</Link>
         <Switch>
           <Route path="/" exact component={Home} />

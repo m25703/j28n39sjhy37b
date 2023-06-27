@@ -21,15 +21,15 @@ const Caroussel = ({ flashcards }) => {
   const [array, setArray] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const carouselRef = useRef(null);
-  const [listOfposts, setListOfposts] = useState([]);
+  const [listPriority, setListPriority] = useState([]);
   const [list2, setList2] = useState([]);
 
-  useEffect(() => {
-    axios.get("http://localhost:3001/posts").then((response) => {
-      // for(let i =0; i<listOfposts.length; i++) { console.log(listOfposts[i]); }
-      setListOfposts(response.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("http://localhost:3001/posts").then((response) => {
+  //     // for(let i =0; i<listOfposts.length; i++) { console.log(listOfposts[i]); }
+  //     setListOfposts(response.data);
+  //   });
+  // }, []);
 
   useEffect(() => {
     const shuffledItems = [...flashcards].sort(() => Math.random() - 0.5);
@@ -55,30 +55,30 @@ const Caroussel = ({ flashcards }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // console.log("DN");
       axios.get("http://localhost:3001/posts").then((response) => {
       // for(let i =0; i<listOfposts.length; i++) { console.log(listOfposts[i]); }
       setList2(response.data);
       });
-      // console.log("DN2");
-      // console.log(list2.length);
       var currentDate = new Date().toISOString();
-      // console.log(currentDate);
       for(let i =0; i<list2.length; i++) {
         var tempDate = new Date(Date.parse(list2[i].createdAt));
         tempDate.setMinutes(tempDate.getMinutes() + list2[i].lastIncrement);
         var futureDate = tempDate.toISOString();
-        // console.log("creation:", list2[i].createdAt);
-        // console.log("add this", list2[i].lastIncrement);
-        // console.log(futureDate);
-        // console.log("TIME::::", futureDate);
         if (futureDate > currentDate) {
-
           console.log("DND The future date is later than the current time.");
         } else {
+          listPriority.push(list2[i]);
           console.log("DISPLAY --- The future date is earlier than the current time.");
         }
       }
+      console.log(listPriority.length);
+      for (let i = 0; i < listPriority.length; i++) {
+        console.log(listPriority[i]);
+        if (!array.some((item) => item.id === listPriority[i].id)) {
+          setArray((prevArray) => [...prevArray, listPriority[i]]);
+        }
+      }
+      setListPriority([]);
     }, 6000);
     return () => clearInterval(interval);
   }, [list2]);
