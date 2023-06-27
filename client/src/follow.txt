@@ -1,0 +1,9 @@
+select at random 
+
+show everything in random
+
+every 1 min regen card if time exceeds
+
+fetch all the present data for card based on id when clicked on, 
+calculate new time, 
+change the value of lastClick and lastIncrement
