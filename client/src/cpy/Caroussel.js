@@ -61,19 +61,23 @@ const Caroussel = ({ flashcards }) => {
       setList2(response.data);
       });
       // console.log("DN2");
-      console.log(list2.length);
-      var currentDate = new Date().toISOString();;
-      console.log(currentDate);
+      // console.log(list2.length);
+      var currentDate = new Date().toISOString();
+      // console.log(currentDate);
       for(let i =0; i<list2.length; i++) {
-        var futureDate = new Date(list2[i].createdAt + list2[i].lastIncrement * 60000);
-        console.log(list2[i].createdAt);
-        console.log(list2[i].lastIncrement);
-        console.log(futureDate);
-        // if (futureDate > currentDate) {
-        //   console.log("DND The future date is later than the current time.");
-        // } else {
-        //   console.log("DISPLAY --- The future date is earlier than the current time.");
-        // }
+        var tempDate = new Date(Date.parse(list2[i].createdAt));
+        tempDate.setMinutes(tempDate.getMinutes() + list2[i].lastIncrement);
+        var futureDate = tempDate.toISOString();
+        // console.log("creation:", list2[i].createdAt);
+        // console.log("add this", list2[i].lastIncrement);
+        // console.log(futureDate);
+        // console.log("TIME::::", futureDate);
+        if (futureDate > currentDate) {
+
+          console.log("DND The future date is later than the current time.");
+        } else {
+          console.log("DISPLAY --- The future date is earlier than the current time.");
+        }
       }
     }, 6000);
     return () => clearInterval(interval);
