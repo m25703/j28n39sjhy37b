@@ -37,22 +37,6 @@ const Caroussel = ({ flashcards }) => {
     setArray(pickedItems);
   }, [flashcards]);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setArray(prevArray => [...prevArray, ...difficultCards]);
-  //     setDifficultCards([]);
-  //   }, 6000);
-  //   return () => clearInterval(interval);
-  // }, [difficultCards]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setArray(prevArray => [...prevArray, ...normalCards]);
-  //     setNormalCards([]);
-  //   }, 15000);
-  //   return () => clearInterval(interval);
-  // }, [normalCards]);
-
   useEffect(() => {
     const interval = setInterval(() => {
       axios.get("http://localhost:3001/posts").then((response) => {
@@ -83,17 +67,10 @@ const Caroussel = ({ flashcards }) => {
     return () => clearInterval(interval);
   }, [list2]);
 
- 
-
   const handleAddAfterCurrent1 = () => {
     const currentIndx = carouselRef.current.state.selectedItem;
     let currentData = array[currentIndx];
-    // console.log(currentData);
-    // const dLink = 'https://localhost:3001/posts/' + currentData.id;
-    // axios.delete('http://localhost:3001/posts/${currentData}')
-    // .then(() => console.log('Delete successful'));
-
-    const newLastIncrement = currentData.lastIncrement+3;
+    const newLastIncrement = currentData.lastIncrement*2.5*1.5;
     const dloc = "http://localhost:3001/posts/" + currentData.id;
     axios.post("http://localhost:3001/posts", {
       answer:currentData.answer,
@@ -107,18 +84,13 @@ const Caroussel = ({ flashcards }) => {
     .catch(function (error) {
       console.log(error);
     });
-
-    // const id = 5; // Replace with the desired primary key ID to delete
-
     axios
       .delete(dloc)
       .then(() => {
         console.log('Row deleted successfully');
-        // Perform any additional actions or update the UI as needed
       })
       .catch((error) => {
         console.error('Error deleting row:', error);
-        // Handle error scenarios and display an error message if needed
       });
     const currentIndex = selectedIndex;
     setSelectedIndex(currentIndex+1);
@@ -126,66 +98,67 @@ const Caroussel = ({ flashcards }) => {
     setArray(updatedArray);
   };
 
-  // const handleAddAfterCurrent2 = () => {
-  //   const currentIndx = carouselRef.current.state.selectedItem;
-  //   const currentData = array[currentIndx];
-  //   const currentIndex = selectedIndex;
-  //   let newArray = [...array];
-  //   setNewNormalCards([]);
-  //   if(!normalCards.includes(currentData)) {
-  //     setNewNormalCards(currentData);
-  //   }
-  //   if(newNormalCards.length!==0) {
-  //   setNormalCards([...normalCards,newNormalCards]);
-  //   }
-  //   // console.log(normalCards);
-  //   if (newArray.length < config.deckSize) {
-  //     const remainingFlashcards = flashcards.filter(
-  //       card => !newArray.includes(card)
-  //     );
-  //     const shuffledRemaining = remainingFlashcards.sort(() => Math.random() - 0.5);
-  //     const newCards = shuffledRemaining.slice(0, config.deckSize);
-  //     newArray = [...newArray, ...newCards];
-  //     setArray(newArray);
-  //   }
-
-  //   setSelectedIndex(currentIndex+1);
-  //   setTimeout(() => {
-  //     const newCurrentIndex = carouselRef.current.state.selectedItem;
-  //     newArray.splice(newCurrentIndex +1 , 0, currentData);
-  //     setArray(newArray);
-  //   }, 5000);
-  // };
+  const handleAddAfterCurrent2 = () => {
+    const currentIndx = carouselRef.current.state.selectedItem;
+    let currentData = array[currentIndx];
+    const newLastIncrement = currentData.lastIncrement*2.5;
+    const dloc = "http://localhost:3001/posts/" + currentData.id;
+    axios.post("http://localhost:3001/posts", {
+      answer:currentData.answer,
+      lastIncrement:newLastIncrement,
+      question:currentData.question,
+      username:currentData.username
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    axios
+      .delete(dloc)
+      .then(() => {
+        console.log('Row deleted successfully');
+      })
+      .catch((error) => {
+        console.error('Error deleting row:', error);
+      });
+    const currentIndex = selectedIndex;
+    setSelectedIndex(currentIndex+1);
+    const updatedArray = array.filter((card, index) => index !== currentIndx);
+    setArray(updatedArray);
+  };
   
-  // const handleAddAfterCurrent3 = () => {
-  //   const currentIndx = carouselRef.current.state.selectedItem;
-  //   const currentData = array[currentIndx];
-  //   const currentIndex = selectedIndex;
-  //   let newArray = [...array];
-  //   setNewDifficultCards([]);
-  //   if(!difficultCards.includes(currentData)) {
-  //     setNewDifficultCards(currentData);
-  //   }
-  //   if(newDifficultCards.length!==0) {
-  //     setDifficultCards([...difficultCards, newDifficultCards]);
-  //   }
-  //   // console.log(difficultCards);
-  //   if (newArray.length < config.deckSize) {
-  //     const remainingFlashcards = flashcards.filter(
-  //       card => !newArray.includes(card)
-  //     );
-  //     const shuffledRemaining = remainingFlashcards.sort(() => Math.random() - 0.5);
-  //     const newCards = shuffledRemaining.slice(0, config.deckSize);
-  //     newArray = [...newArray, ...newCards];
-  //     setArray(newArray);
-  //   }
-  //   setSelectedIndex(currentIndex+1);
-  //   setTimeout(() => {
-  //     const newCurrentIndex = carouselRef.current.state.selectedItem;
-  //     newArray.splice(newCurrentIndex +1 , 0, currentData);
-  //     setArray(newArray);
-  //   }, 5000);
-  // };
+  const handleAddAfterCurrent3 = () => {
+    const currentIndx = carouselRef.current.state.selectedItem;
+    let currentData = array[currentIndx];
+    const newLastIncrement = currentData.lastIncrement*1.2;
+    const dloc = "http://localhost:3001/posts/" + currentData.id;
+    axios.post("http://localhost:3001/posts", {
+      answer:currentData.answer,
+      lastIncrement:newLastIncrement,
+      question:currentData.question,
+      username:currentData.username
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    axios
+      .delete(dloc)
+      .then(() => {
+        console.log('Row deleted successfully');
+      })
+      .catch((error) => {
+        console.error('Error deleting row:', error);
+      });
+    const currentIndex = selectedIndex;
+    setSelectedIndex(currentIndex+1);
+    const updatedArray = array.filter((card, index) => index !== currentIndx);
+    setArray(updatedArray);
+  };
 
   return (
     <>
@@ -238,7 +211,7 @@ const Caroussel = ({ flashcards }) => {
           textTransform:'none',
           touchAction:'manipulation'
       }}>Easy</button> 
-      {/* <button onClick={handleAddAfterCurrent2}
+      <button onClick={handleAddAfterCurrent2}
       style={{
         backgroundColor:'#a2aeb3',
         borderRadius:'0.33vw',
@@ -283,7 +256,7 @@ const Caroussel = ({ flashcards }) => {
         textAlign:'center',
         textTransform:'none',
         touchAction:'manipulation'
-      }}>Difficult</button> */}
+      }}>Difficult</button>
     </div>
   </>
   );
