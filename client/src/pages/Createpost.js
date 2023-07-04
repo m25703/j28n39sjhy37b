@@ -1,31 +1,41 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-
 import * as Yup from "yup";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../helpers/AuthContext";
 
-function Createpost() {
+function CreatePost() {
+  const { authState } = useContext(AuthContext);
+
+  let history = useHistory();
   const initialValues = {
     question: "",
     answer: "",
-    username: "abcd",
-    lastIncrement: 1,
   };
 
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      history.push("/login");
+    }
+  }, []);
   const validationSchema = Yup.object().shape({
-    question: Yup.string().required("You must input a Question!"),
+    question: Yup.string().required("You must input a question!"),
     answer: Yup.string().required(),
-    username: Yup.string().min(3).max(15).required(),
   });
-  
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/posts", data).then((response) => {
-      console.log(response);
-    });
+    axios
+      .post("http://localhost:3001/posts", data, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then((response) => {
+        history.push("/");
+      });
   };
+
   return (
-    <div className="createpostPage">
+    <div className="createPostPage">
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
@@ -36,7 +46,7 @@ function Createpost() {
           <ErrorMessage name="question" component="span" />
           <Field
             autoComplete="off"
-            id="inputCreatepost"
+            id="inputCreatePost"
             name="question"
             placeholder="(Ex. Question...)"
           />
@@ -44,16 +54,16 @@ function Createpost() {
           <ErrorMessage name="answer" component="span" />
           <Field
             autoComplete="off"
-            id="inputCreatepost"
+            id="inputCreatePost"
             name="answer"
-            placeholder="(Ex. Answer...)"
+            placeholder="(Ex. Post...)"
           />
-        
-          <button type="submit"> Create Card</button>
+
+          <button type="submit"> Create Post</button>
         </Form>
       </Formik>
     </div>
   );
 }
 
-export default Createpost;
+export default CreatePost;

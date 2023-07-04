@@ -1,31 +1,56 @@
 const express = require("express");
 const router = express.Router();
-const { posts } = require("../models");
+const { Posts } = require("../models");
 
-router.get("/", async (req, res) => {
-  const listOfposts = await posts.findAll();
-  res.json(listOfposts);
+const { validateToken } = require("../middlewares/AuthMiddleware");
+
+router.get("/", validateToken, async (req, res) => {
+  const listOfPosts = await Posts.findAll();
+  res.json({ listOfPosts: listOfPosts });
 });
 
-router.post("/", async (req, res) => {
-  const post = req.body;
-  await posts.create(post);
+router.get("/byId/:id", async (req, res) => {
+  const id = req.params.id;
+  const post = await Posts.findByPk(id);
   res.json(post);
 });
 
-router.put("/:id", async (req, res) => {
+router.get("/byuserId/:id", async (req, res) => {
+  const id = req.params.id;
+  const listOfPosts = await Posts.findAll({
+    where: { UserId: id }
+  });
+  res.json(listOfPosts);
+});
+
+router.post("/", validateToken, async (req, res) => {
+  const post = req.body;
+  post.username = req.user.username;
+  post.UserId = req.user.id;
+  await Posts.create(post);
+  res.json(post);
+});
+
+router.put("/question", validateToken, async (req, res) => {
+  const { newQuestion, id } = req.body;
+  await Posts.update({ question: newQuestion }, { where: { id: id } });
+  res.json(newQuestionuestion);
+});
+
+router.put("/answer", validateToken, async (req, res) => {
   const { newText, id } = req.body;
-  await posts.update({ lastIncrement: newText }, { where: { id: id } });
+  await Posts.update({ answer: newText }, { where: { id: id } });
   res.json(newText);
 });
 
-router.delete("/:id", async (req, res) => {
-  const postId = req.params.id;
-  await posts.destroy({
+router.delete("/:postId", validateToken, async (req, res) => {
+  const postId = req.params.postId;
+  await Posts.destroy({
     where: {
       id: postId,
     },
   });
+
   res.json("DELETED SUCCESSFULLY");
 });
 

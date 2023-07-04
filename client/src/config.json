@@ -1,3 +1,4 @@
 {
-    "deckSize":5
+    "deckSize":5,
+    "initialDuration":1
 }

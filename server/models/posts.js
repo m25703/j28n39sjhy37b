@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const posts = sequelize.define("posts", {
+  const Posts = sequelize.define("Posts", {
     question: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -21,5 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 1,
     },
   });
-  return posts;
+
+  return Posts;
 };
