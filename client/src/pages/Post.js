@@ -26,38 +26,6 @@ function Post() {
       });
   };
 
-  const editPost = (option) => {
-    if (option === "question") {
-      let newQuestion = prompt("Enter New Question:");
-      axios.put(
-        "http://localhost:3001/posts/question",
-        {
-          newQuestion: newQuestion,
-          id: id,
-        },
-        {
-          headers: { accessToken: localStorage.getItem("accessToken") },
-        }
-      );
-
-      setPostObject({ ...postObject, question: newQuestion });
-    } else {
-      let newanswer = prompt("Enter New Text:");
-      axios.put(
-        "http://localhost:3001/posts/answer",
-        {
-          newText: newanswer,
-          id: id,
-        },
-        {
-          headers: { accessToken: localStorage.getItem("accessToken") },
-        }
-      );
-
-      setPostObject({ ...postObject, answer: newanswer });
-    }
-  };
-
   return (
     <div className="postPage">
       <div className="leftSide">

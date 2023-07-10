@@ -1,15 +1,15 @@
 .App {
   width: 100%;
-  height: auto;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
-
-body {
-  margin: 0;
-  padding: 0;
-}
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  }
 
 .post {
   width: 400px;
@@ -237,11 +237,6 @@ button {
   margin-top: 20px;
 }
 
-#individual {
-  height: 500px;
-  width: 600px;
-}
-
 #individual .question,
 #individual .footer {
   font-size: 30px;
@@ -262,7 +257,6 @@ html{
 #loginform{
   max-width: 500px;
   min-width: 300px;
-  max-height: 700px;
   width: 30%;
   height: 60%;
   margin: 100px auto;

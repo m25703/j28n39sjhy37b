@@ -3,7 +3,7 @@ import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 
-function Login() {
+function Registration() {
   const { setAuthState } = useContext(AuthContext);
   const unam = useRef();
   const pass = useRef();
@@ -11,19 +11,10 @@ function Login() {
 
   const login = () => {
     const data = { username: unam.current.value, password: pass.current.value };
-    if(data.username === "" || data.password === "") return;
-    axios.post("http://localhost:3001/auth/login", data).then((response) => {
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
-        localStorage.setItem("accessToken", response.data.token);
-        setAuthState({
-          username: response.data.username,
-          id: response.data.id,
-          status: true,
-        });
-        history.push("/");
-      }
+    if(data.username === "" || data.password === "" || data.password.length<7) return;
+    axios.post("http://localhost:3001/auth", data).then(() => {
+      console.log(data);
+      history.push("/login");
     });
   };
 
@@ -31,10 +22,10 @@ class LoginForm extends React.Component{
   render(){
     return(
       <div id="loginform">
-        <FormHeader title="Login" />
+        <FormHeader title="Sign Up" />
         <Form />
         <center>
-        Not a user? <Link to="/registration"> <span style={{color:"deepskyblue"}}>Register</span></Link> <div>   &nbsp;</div>
+        Already a user? <Link to="/login"> <span style={{color:"deepskyblue"}}>Login</span></Link> <div>   &nbsp;</div>
         </center>
       </div>
     )
@@ -49,7 +40,7 @@ const Form = props => (
    <div>
      <FormInputU description="Username" placeholder="Enter your username" type="text"   />
      <FormInputP description="Password" placeholder="Enter your password" type="password"  />
-     <FormButton title="Log in"/>
+     <FormButton title="Register"/>
    </div>
 );
 
@@ -75,11 +66,12 @@ const FormInputP = props => (
 
   return (
     <>
-    <div style={{width:"100%", height:"100%", background: "-webkit-linear-gradient(left, #003366,#004080,#0059b3,#0073e6)"}}>
+    <div style={{width:"100%", background: "-webkit-linear-gradient(left, #003366,#004080,#0059b3,#0073e6)"}}>
     <LoginForm />
     </div>
     </>
   );
 }
 
-export default Login;
+export default Registration;
+
