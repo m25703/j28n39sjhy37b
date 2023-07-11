@@ -11,34 +11,35 @@ function Login() {
 
   const login = () => {
     const data = { username: unam.current.value, password: pass.current.value };
-    if(data.username === "" || data.password === "") return;
-    axios.post("http://localhost:3001/auth/login", data).then((response) => {
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
-        localStorage.setItem("accessToken", response.data.token);
-        setAuthState({
-          username: response.data.username,
-          id: response.data.id,
-          status: true,
-        });
-        history.push("/");
-      }
-    });
+    if (data.username === "" || data.password === "") return;
+    axios
+      .post("http://localhost:3001/auth/login", data)
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          localStorage.setItem("accessToken", response.data.token);
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            status: true,
+          });
+          // Set the access token in the request header for future authenticated requests
+          axios.defaults.headers.common['accessToken'] = response.data.token;
+          history.push("/");
+        }
+      });
   };
-
-class LoginForm extends React.Component{
-  render(){
-    return(
+  
+const LoginForm = () => {
+  return (
       <div id="loginform">
         <FormHeader title="Login" />
         <Form />
         <center>
         Not a user? <Link to="/registration"> <span style={{color:"deepskyblue"}}>Register</span></Link> <div>   &nbsp;</div>
         </center>
-      </div>
-    )
-  }
+      </div> )
 }
 
 const FormHeader = props => (
@@ -54,20 +55,20 @@ const Form = props => (
 );
 
 const FormButton = props => (
-  <div id="button" class="row">
+  <div id="button" className="row">
     <button onClick={login}>{props.title}</button>
   </div>
 );
 
 const FormInputU = props => (
-  <div class="row">
+  <div className="row">
     <label>{props.description}</label>
     <input type={props.type} placeholder={props.placeholder} ref={unam}/>
   </div>  
 );
 
 const FormInputP = props => (
-  <div class="row">
+  <div className="row">
     <label>{props.description}</label>
     <input type={props.type} placeholder={props.placeholder} ref={pass}/>
   </div>  
