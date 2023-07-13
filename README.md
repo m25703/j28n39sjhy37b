@@ -54,7 +54,7 @@ Once you have completed the installation steps, the application will be up and r
 
 ## Troubleshooting
 
-- **SQL Connection Issues**: If you encounter any issues connecting to your SQL server, ensure that the server is running and that you have provided the correct credentials in the server configuration file.
+- **SQL Connection Issues**: If you encounter any issues connecting to your SQL server, ensure that the server is running and that you have provided the correct credentials in the server configuration file. Change the database name as required.
 
 - **Port Conflict**: If port `3000` is already in use on your machine, you can specify a different port by modifying the client's configuration file. Open the `client/package.json` file and update the `"start"` script to include the desired port number.
 
@@ -68,10 +68,14 @@ The Project Name is licensed under the [MIT License](LICENSE). Feel free to modi
 
 ## Acknowledgements
 
-We would like to acknowledge the following resources and libraries that made this project possible:
+The following resources, libraries, and frameworks that made this project possible:
 
 - [SQL](https://www.sql.org/)
 - [Node.js](https://nodejs.org/)
+- [Express.js](https://expressjs.com/)
 - [React](https://reactjs.org/)
-
-Thank you for choosing Project Name! We hope you enjoy using it. If you have any further questions, please feel free to reach out to us.
+- [React Router DOM](https://reactrouter.com/)
+- [Axios](https://axios-http.com/)
+- [Yup](https://github.com/jquense/yup)
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [Sequelize](https://sequelize.org/)
