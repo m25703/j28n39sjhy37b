@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Posts = sequelize.define("Posts", {
-    id : { 
+    id: { 
       type: DataTypes.INTEGER, 
       autoIncrement: true, 
       primaryKey: true },
@@ -16,14 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastClick: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW, 
-    },
-    lastIncrement: {
-      type: DataTypes.FLOAT,
-      defaultValue: 1,
-    },
+    topic: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "test",
+    }
   });
 
   return Posts;

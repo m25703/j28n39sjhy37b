@@ -29,6 +29,7 @@ function Home() {
             id: response.data.id,
             status: true,
           });
+          console.log(authState);
         }
       });
   }, []);
@@ -62,15 +63,19 @@ function Home() {
     const newLastIncrement = currentPost.lastIncrement;
     const dloc = `http://localhost:3001/posts/${currentPost.id}`;
 
-    // Delete the current post
+    // Delete the current post 
+    // do when username has already done that cardy, can see if username same
+    // avoid duplilick by keeping a neutral card userVal
+    
     axios
       .delete(dloc)
       .then(() => {
         console.log("Row deleted successfully");
+        console.log(dloc, currentPost.username, authState.username);
       })
       .catch((error) => {
         console.error("Error deleting row:", error);
-      });
+      }); 
 
     // Create a new post with the same data as the current post
     axios
@@ -86,8 +91,6 @@ function Home() {
       .catch((error) => {
         console.log("Error creating new post:", error);
       });
-
-    
 
     // Sort the posts based on lastClick in ascending order
     const sortedPosts = [...listOfPosts].sort(
@@ -123,7 +126,7 @@ function Home() {
       {listOfPosts.length > 0 && (
         <div className="post">
           <div className="question">
-            {listOfPosts[currentPostIndex].question}
+            <h4>{listOfPosts[currentPostIndex].question}</h4>
           </div>
           <div
             className="body"
@@ -134,13 +137,7 @@ function Home() {
             {listOfPosts[currentPostIndex].answer}
           </div>
           <div className="footer">
-            <div className="username">
-              <Link
-                to={`/profile/${listOfPosts[currentPostIndex].UserId}`}
-              >
-                {listOfPosts[currentPostIndex].username}
-              </Link>
-            </div>
+            {/*put buttons here*/}
           </div>
         </div>
       )}

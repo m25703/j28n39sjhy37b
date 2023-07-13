@@ -72,6 +72,7 @@ html, body {
   color: white;
 }
 
+h4 { font-weight: 300; font-size: 38px; margin: 0px 0px 0px 0px; line-height: 120%; font-family: 'Open sans', sans-serif;}
 .buttons label {
   margin-right: 20px;
   margin-left: 10px;

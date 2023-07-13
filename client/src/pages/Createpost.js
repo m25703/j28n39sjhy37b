@@ -12,6 +12,7 @@ function CreatePost() {
   const initialValues = {
     question: "",
     answer: "",
+    username: "null"
   };
 
   useEffect(() => {

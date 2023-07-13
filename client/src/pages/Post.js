@@ -38,7 +38,8 @@ function Post() {
             //   }
             // }}
           >
-            {postObject.question}
+            <h4>{postObject.question}</h4>
+            
           </div>
           <div
             className="body"
