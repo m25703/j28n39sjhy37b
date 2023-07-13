@@ -57,70 +57,33 @@ function Home() {
     }
   }, []);
 
-  const goToNextPost = () => {
-    const currentPost = listOfPosts[currentPostIndex];
 
-    const newLastIncrement = currentPost.lastIncrement;
-    const dloc = `http://localhost:3001/posts/${currentPost.id}`;
 
-    // Delete the current post 
-    // do when username has already done that cardy, can see if username same
-    // avoid duplilick by keeping a neutral card userVal
-    
+  const addLike = (postId) => {
     axios
-      .delete(dloc)
-      .then(() => {
-        console.log("Row deleted successfully");
-        console.log(dloc, currentPost.username, authState.username);
-      })
-      .catch((error) => {
-        console.error("Error deleting row:", error);
-      }); 
-
-    // Create a new post with the same data as the current post
-    axios
-      .post("http://localhost:3001/posts", {
-        answer: currentPost.answer,
-        lastIncrement: newLastIncrement,
-        question: currentPost.question,
-        username: authState.username,
-      })
+      .post(
+        "http://localhost:3001/likes",
+        { PostId: postId },
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      )
       .then((response) => {
         console.log(response.data);
+        // Handle the response accordingly, e.g., update the UI
       })
       .catch((error) => {
-        console.log("Error creating new post:", error);
+        console.error("Error adding like:", error);
       });
 
-    // Sort the posts based on lastClick in ascending order
-    const sortedPosts = [...listOfPosts].sort(
-      (a, b) =>
-        new Date(a.lastClick).getTime() +
-        a.lastIncrement * 60000 -
-        (new Date(b.lastClick).getTime() + b.lastIncrement * 60000)
-    );
-
-    // Find the index of the current post in the sorted list
-    const currentIndexInSorted = sortedPosts.findIndex(
-      (post) => post.id === currentPost.id
-    );
-
-    // Choose the next post based on the sorted list
-    let nextPostIndex;
-    if (currentIndexInSorted === sortedPosts.length - 1) {
-      // Reached the end of the list, go back to the beginning
-      nextPostIndex = 0;
-    } else {
-      nextPostIndex = currentIndexInSorted + 1;
-    }
-
-    // Find the index of the next post in the original list
-    const nextPostIndexInOriginal = listOfPosts.findIndex(
-      (post) => post.id === sortedPosts[nextPostIndex].id
-    );
-    setCurrentPostIndex(nextPostIndexInOriginal);
   };
 
+  const goToNextPost = () => {
+    const currentPost = listOfPosts[currentPostIndex];
+    
+  };
+
+  
   return (
     <div>
       {listOfPosts.length > 0 && (

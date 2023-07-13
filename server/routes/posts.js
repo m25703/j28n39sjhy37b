@@ -27,7 +27,7 @@ router.post("/", validateToken, async (req, res) => {
   const post = req.body;
   post.username = req.user.username;
   post.UserId = req.user.id;
-  post.lastClicked = new Date(); // Add the last clicked time to the post
+  // post.lastClicked = new Date(); // Add the last clicked time to the post
   await Posts.create(post);
   res.json(post);
 });
