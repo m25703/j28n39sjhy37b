@@ -52,25 +52,45 @@ function Home() {
   }, []);
 
   const addLike = (postId) => {
+    // Retrieve the current likeIncrement value
     axios
-      .post(
-        "http://localhost:3001/likes",
-        { PostId: postId,
-          customNumber: 2
-        },
-        {
-          headers: { accessToken: localStorage.getItem("accessToken") },
-        }
-      )
+      .get(`http://localhost:3001/likes/${postId}`, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
       .then((response) => {
-        console.log("added like:", response.data);
-        // Handle the response accordingly, e.g., update the UI
+        const currentlikeIncrement = response.data.likeIncrement; // Access `likeIncrement` from `response.data`
+        console.log(currentlikeIncrement);
+        const newlikeIncrement = currentlikeIncrement + 3;
+        console.log(newlikeIncrement);
+        // Update the likeIncrement value with the new value
+        console.log(postId);
+        axios
+          .post(
+            "http://localhost:3001/likes",
+            {
+              PostId: postId,
+              customNumber: newlikeIncrement,
+            },
+            {
+              headers: { accessToken: localStorage.getItem("accessToken") },
+            }
+          )
+          .then((response) => {
+            console.log("Added like:", response.data);
+            // Handle the response accordingly, e.g., update the UI
+          })
+          .catch((error) => {
+            console.error("Error adding like:", error);
+          });
       })
       .catch((error) => {
-        console.error("Error adding like:", error);
+        console.error("Error retrieving likeIncrement:", error);
       });
-
   };
+  
+  
+  
+  
 
   const goToNextPost = () => {
     const currentPost = listOfPosts[currentPostIndex];

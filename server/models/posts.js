@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Posts = sequelize.define("Posts", {
     id: { 
       type: DataTypes.INTEGER, 
-      autoIncrement: true, 
+      autolikeIncrement: true, 
       primaryKey: true },
     question: {
       type: DataTypes.STRING,

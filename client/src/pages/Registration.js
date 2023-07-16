@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 function Registration() {
   const unam = useRef();
   const pass = useRef();
+  let history = useHistory();
 
   const onSubmit = () => {
     const data = { username: unam.current.value, password: pass.current.value };
@@ -12,6 +13,7 @@ function Registration() {
     axios.post("http://localhost:3001/auth", data).then(() => {
       console.log(data);
     });
+    history.push("/login");
   };
 
 class RegistrationForm extends React.Component{

@@ -13,12 +13,12 @@ router.post("/", validateToken, async (req, res) => {
 
   if (!found) {
     // If the entry doesn't exist, create a new one with the customNumber
-    await Likes.create({ PostId: PostId, UserId: UserId, increment: customNumber });
+    await Likes.create({ PostId: PostId, UserId: UserId, likeIncrement: customNumber });
     res.json({ liked: true });
   } else {
     // If the entry exists, update the count with the customNumber
     const updatedLikes = await Likes.update(
-      { increment: customNumber },
+      { likeIncrement: customNumber },
       { where: { PostId: PostId, UserId: UserId } }
     );
     if (updatedLikes[0] === 1) {
@@ -26,6 +26,24 @@ router.post("/", validateToken, async (req, res) => {
     } else {
       res.status(500).json({ error: "Failed to update likes count." });
     }
+  }
+});
+
+router.get("/:PostId", validateToken, async (req, res) => {
+  const { PostId } = req.params;
+  const UserId = req.user.id;
+
+  try {
+    const like = await Likes.findOne({
+      where: { UserId: UserId, PostId: PostId },
+    });
+    if (like) {
+      res.json({ likeIncrement: like.likeIncrement });
+    } else {
+      res.json({ likeIncrement: 3 });
+    }
+  } catch (error) {
+    res.json({ likeIncrement: 1 });
   }
 });
 

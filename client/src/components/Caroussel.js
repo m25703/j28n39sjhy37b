@@ -48,7 +48,7 @@ const Caroussel = () => {
           for (let i = 0; i < response.data.length; i++) {
             console.log(response.data.length);
             const tempDate = new Date(Date.parse(response.data[i].createdAt));
-            tempDate.setMinutes(tempDate.getMinutes() + response.data[i].lastIncrement);
+            tempDate.setMinutes(tempDate.getMinutes() + response.data[i].lastlikeIncrement);
             const futureDate = tempDate.toISOString();
             if (futureDate > currentDate) {
               // console.log("DND The future date is later than the current time.");
@@ -89,11 +89,11 @@ const Caroussel = () => {
     if(array.length<1) return;
     const currentIndx = carouselRef.current.state.selectedItem;
     let currentData = array[currentIndx];
-    const newLastIncrement = currentData.lastIncrement*2.5*1.5;
+    const newLastlikeIncrement = currentData.lastlikeIncrement*2.5*1.5;
     const dloc = "http://localhost:3001/posts/" + currentData.id;
     axios.post("http://localhost:3001/posts", {
       answer:currentData.answer,
-      lastIncrement:newLastIncrement,
+      lastlikeIncrement:newLastlikeIncrement,
       question:currentData.question,
       username:authState.username
     })
