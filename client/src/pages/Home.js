@@ -34,12 +34,6 @@ function Home() {
       });
   }, []);
 
-  const logout = () => {
-    localStorage.removeItem("accessToken");
-    setAuthState({ username: "", id: 0, status: false });
-    history.push("/login");
-  };
-
   useEffect(() => {
     if (!localStorage.getItem("accessToken")) {
       history.push("/login");
@@ -57,19 +51,19 @@ function Home() {
     }
   }, []);
 
-
-
   const addLike = (postId) => {
     axios
       .post(
         "http://localhost:3001/likes",
-        { PostId: postId },
+        { PostId: postId,
+          customNumber: 2
+        },
         {
           headers: { accessToken: localStorage.getItem("accessToken") },
         }
       )
       .then((response) => {
-        console.log(response.data);
+        console.log("added like:", response.data);
         // Handle the response accordingly, e.g., update the UI
       })
       .catch((error) => {
@@ -80,8 +74,30 @@ function Home() {
 
   const goToNextPost = () => {
     const currentPost = listOfPosts[currentPostIndex];
-    
+    addLike(currentPost.id);
+    // Sort the posts based on lastClick in ascending order
+    const sortedPosts = [...listOfPosts].sort(
+      (a, b) => a.id - b.id
+    );
+    // Find the index of the current post in the sorted list
+    const currentIndexInSorted = sortedPosts.findIndex(
+      (post) => post.id === currentPost.id
+    );
+    // Choose the next post based on the sorted list
+    let nextPostIndex;
+    if (currentIndexInSorted === sortedPosts.length - 1) {
+      // Reached the end of the list, go back to the beginning
+      nextPostIndex = 0;
+    } else {
+      nextPostIndex = currentIndexInSorted + 1;
+    }
+    // Find the index of the next post in the original list
+    const nextPostIndexInOriginal = listOfPosts.findIndex(
+      (post) => post.id === sortedPosts[nextPostIndex].id
+    );
+    setCurrentPostIndex(nextPostIndexInOriginal);
   };
+
 
   
   return (
@@ -91,12 +107,7 @@ function Home() {
           <div className="question">
             <h4>{listOfPosts[currentPostIndex].question}</h4>
           </div>
-          <div
-            className="body"
-            onClick={() => {
-              history.push(`/post/${listOfPosts[currentPostIndex].id}`);
-            }}
-          >
+          <div className="body" >
             {listOfPosts[currentPostIndex].answer}
           </div>
           <div className="footer">

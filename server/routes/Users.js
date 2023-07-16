@@ -21,8 +21,7 @@ router.post("/login", async (req, res) => {
 
   const user = await Users.findOne({ where: { username: username } });
 
-  if (!user) {
-    res.json({ error: "User Doesn't Exist" });
+  if (!user) { res.json({ error: "User Doesn't Exist" });
     return;
   }
 

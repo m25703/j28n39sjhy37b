@@ -10,10 +10,20 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(process.env[config.use_env_variable], {
+    ...config,
+    logging: console.log, // Enable logging to the console
+  });
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, {
+    ...config,
+    logging: console.log, // Enable logging to the console
+  });
 }
+
+
+console.log('Logging enabled:', sequelize.options.logging); // Add this line before the Sequelize code
+
 
 fs
   .readdirSync(__dirname)
