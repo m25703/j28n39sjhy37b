@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import Profile from "./pages/Profile";
 import ChangePassword from "./pages/ChangePassword";
+// import AutoCreate from "./pages/AutoCreate";
+import Tp from "./pages/topic";
 
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
@@ -57,6 +59,8 @@ function App() {
             <Route path="/login" exact component={Login} />
             <Route path="/profile/:id" exact component={Profile} />
             <Route path="/changepassword" exact component={ChangePassword} />
+            {/* <Route path="/autocreate" exact component={AutoCreate} /> */}
+            <Route path="/topic" exact component={Tp} />
             <Route path="*" exact component={PageNotFound} />
           </Switch>
         </Router>

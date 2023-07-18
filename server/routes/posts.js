@@ -33,18 +33,6 @@ router.post("/", validateToken, async (req, res) => {
   res.json(post);
 });
 
-router.put("/title", validateToken, async (req, res) => {
-  const { newTitle, id } = req.body;
-  await Posts.update({ title: newTitle }, { where: { id: id } });
-  res.json(newTitle);
-});
-
-router.put("/postText", validateToken, async (req, res) => {
-  const { newText, id } = req.body;
-  await Posts.update({ postText: newText }, { where: { id: id } });
-  res.json(newText);
-});
-
 router.delete("/:postId", validateToken, async (req, res) => {
   const postId = req.params.postId;
   await Posts.destroy({
@@ -52,8 +40,36 @@ router.delete("/:postId", validateToken, async (req, res) => {
       id: postId,
     },
   });
-
   res.json("DELETED SUCCESSFULLY");
 });
+
+  // Retrieve all available topics
+router.get("/topics", async (req, res) => {
+  try {
+    const topics = await Posts.findAll({
+      attributes: ["topic"],
+      group: ["topic"],
+    });
+    res.json(topics.map((topic) => topic.topic));
+  } catch (error) {
+    console.error("Error retrieving topics:", error);
+    res.status(500).json({ error: "Failed to retrieve topics" });
+  }
+});
+
+// Retrieve posts based on the selected topic
+router.get("/posts", async (req, res) => {
+  const { topic } = req.query;
+  try {
+    const posts = await Posts.findAll({
+      where: { topic }
+    });
+    res.json(posts);
+  } catch (error) {
+    console.error("Error retrieving posts:", error);
+    res.status(500).json({ error: "Failed to retrieve posts" });
+  }
+});
+
 
 module.exports = router;

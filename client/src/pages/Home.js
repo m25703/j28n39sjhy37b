@@ -48,6 +48,7 @@ function Home() {
         .catch((error) => {
           console.error("Error fetching posts:", error);
         });
+      console.log(listOfPosts[0]);
     }
   }, []);
 
@@ -87,14 +88,9 @@ function Home() {
         console.error("Error retrieving likeIncrement:", error);
       });
   };
-  
-  
-  
-  
 
-  const goToNextPost = () => {
-    const currentPost = listOfPosts[currentPostIndex];
-    addLike(currentPost.id);
+  const selectNextPost = (currentPost) => {
+    // HERE CHOOSE THE NEXT POST IN ORDER of like and whatnot idk lol
     // Sort the posts based on lastClick in ascending order
     const sortedPosts = [...listOfPosts].sort(
       (a, b) => a.id - b.id
@@ -116,6 +112,12 @@ function Home() {
       (post) => post.id === sortedPosts[nextPostIndex].id
     );
     setCurrentPostIndex(nextPostIndexInOriginal);
+  }
+
+  const goToNextPost = () => {
+    const currentPost = listOfPosts[currentPostIndex];
+    addLike(currentPost.id);
+    selectNextPost(currentPost);
   };
 
 

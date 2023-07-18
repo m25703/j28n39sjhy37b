@@ -1,0 +1,30 @@
+.tp-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    text-align: left;
+  }
+  
+  .topics-container {
+    margin-bottom: 20px;
+  }
+  
+  .posts-container button {
+    margin-bottom: 10px;
+  }
+  
+  .posts-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .posts-container li {
+    margin-bottom: 20px;
+  }
+  
+  .posts-container p {
+    margin: 0;
+  }
+  
