@@ -1,30 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const { Likes } = require("../models");
+const { interacts } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 router.post("/", validateToken, async (req, res) => {
   const { PostId, customNumber } = req.body;
   const UserId = req.user.id;
 
-  const found = await Likes.findOne({
+  const found = await interacts.findOne({
     where: { PostId: PostId, UserId: UserId },
   });
 
   if (!found) {
     // If the entry doesn't exist, create a new one with the customNumber
-    await Likes.create({ PostId: PostId, UserId: UserId, likeIncrement: customNumber });
-    res.json({ liked: true });
+    await interacts.create({ PostId: PostId, UserId: UserId, interactIncrement: customNumber });
+    res.json({ interactd: true });
   } else {
     // If the entry exists, update the count with the customNumber
-    const updatedLikes = await Likes.update(
-      { likeIncrement: customNumber },
+    const updatedinteracts = await interacts.update(
+      { interactIncrement: customNumber,
+      updatedAt: Date.now() },
       { where: { PostId: PostId, UserId: UserId } }
     );
-    if (updatedLikes[0] === 1) {
-      res.json({ liked: false });
+    if (updatedinteracts[0] === 1) {
+      res.json({ interactd: false });
     } else {
-      res.status(500).json({ error: "Failed to update likes count." });
+      res.status(500).json({ error: "Failed to update interacts count." });
     }
   }
 });
@@ -34,16 +35,16 @@ router.get("/:PostId", validateToken, async (req, res) => {
   const UserId = req.user.id;
 
   try {
-    const like = await Likes.findOne({
+    const interact = await interacts.findOne({
       where: { UserId: UserId, PostId: PostId },
     });
-    if (like) {
-      res.json({ likeIncrement: like.likeIncrement });
+    if (interact) {
+      res.json({ interactIncrement: interact.interactIncrement });
     } else {
-      res.json({ likeIncrement: 3 });
+      res.json({ interactIncrement: 3 });
     }
   } catch (error) {
-    res.json({ likeIncrement: 1 });
+    res.json({ interactIncrement: 1 });
   }
 });
 

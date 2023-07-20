@@ -76,7 +76,7 @@ const FormInputP = props => (
 
   return (
     <>
-    <div style={{width:"100%", height:"100%", background: "-webkit-linear-gradient(left, #003366,#004080,#0059b3,#0073e6)"}}>
+    <div style={{width:"100%", height:"100%", background: "linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)"}}>
     <LoginForm />
     </div>
     </>

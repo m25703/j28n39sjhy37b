@@ -40,7 +40,8 @@ const Tp = ({ }) => {
     : listOfPosts;
 
   return (
-    <div className="tp-container">
+    <div className="tp-container" style={{width:"100%", height:"100%", margin:"0vw", padding:"5vw"}}>
+      <style>{'body { background:linear-gradient(90deg, #ff9966, #ff5e62); }'}</style>
       {showTopics && (
         <div className="topics-container">
           <h2>Topics</h2>
@@ -56,15 +57,38 @@ const Tp = ({ }) => {
 
       {!showTopics && (
         <div className="posts-container">
-          <button onClick={() => setShowTopics(true)}>Back to Topics</button>
-          <h2>Posts</h2>
+          <button onClick={() => setShowTopics(true)}  style={{
+              appearance: 'none',
+              backgroundColor: '#0a0a0a',
+              borderRadius: '2vw',
+              borderStyle: 'none',
+              color: '#FFFFFF',
+              cursor: 'pointer',
+              fontFamily:
+                'Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"',
+              fontSize: '2vw',
+              lineHeight: 'normal',
+              padding:'0.75vw 1.66vw 0.66vw',
+              minWidth: '0',
+              outline: 'none',
+              textAlign: 'center',
+              textDecoration: 'none',
+              transition: 'all 300ms cubic-bezier(.23, 1, 0.32, 1)',
+              userSelect: 'none',
+              touchAction: 'manipulation',
+              width: '16vw',
+              margin:'0.75vw',
+              willChange: 'transform'
+            }} >Back to Topics</button>
+          <h2>Cards</h2>
           <ul>
             {filteredPosts.map((post) => (
               <li key={post.id}>
-                <p>Question: {post.question}</p>
-                <p>Answer: {post.answer}</p>
-                <p>Username: {post.username}</p>
-                <p>Topic: {post.topic}</p>
+                <div className="post-container">
+                  <p className="post-question">Question: {post.question}</p>
+                  <p className="post-answer">Answer: {post.answer}</p>
+                  <p className="post-topic">Topic: {post.topic}</p>
+                </div>
               </li>
             ))}
           </ul>

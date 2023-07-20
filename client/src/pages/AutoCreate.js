@@ -1,67 +1,67 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import './AutoCreate.css'
+import { AuthContext } from "../helpers/AuthContext";
 
-const AutoCreate = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [reply, setReply] = useState('');
+export default function Creation() {
+  const [prompt, setPrompt] = useState("");
+  const [response, setResponse] = useState("");
+  const HTTP = "http://localhost:8080/chat";
+  const { authState } = useContext(AuthContext);
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
-  };
+    const modifiedPrompt = `FOR THE FOLLOWING TEXT, GENERATE A ARRAY OF JSON OBJECTS, EACH WITH AN ATTRIBUTE "question" and "answer", return it as plain text and do not include any other text: ${prompt}`;
+    setPrompt(modifiedPrompt);
 
-  const handleSend = async () => {
-    try {
-      const payload = {
-        messages: [
-          { role: 'system', content: 'You are a helpful assistant.' },
-          { role: 'user', content: content },
-        ],
-        max_tokens: 50,
-      };
-  
-      const response = await axios.post('/api', payload, {
-        headers: {
-          Authorization: 'Bearer --enter custom token--',
-          'Content-Type': 'application/json',
-        },
+    axios
+      .post(`${HTTP}`, { prompt })
+      .then((res) => {
+        setResponse(res);
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-  
-      const reply = response.data.choices[0].message.content;
-      setReply(reply);
-    } catch (error) {
-      console.error('Error in API call:', error);
-    }
+
+    setPrompt("");
   };
-  
+
+  const handlePrompt = (e) => {
+    setPrompt(e.target.value);
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      console.log("failed");
+    } else {
+      for(let k =0; k<response.length; k+=1) {
+        axios
+        .post("http://localhost:3001/posts", response[k], {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        })
+      }
+    }
+  }, [response]);
+
   return (
-    <div>
-      <h1>Chat Page</h1>
-      <label htmlFor="title">Title:</label>
-      <input type="text" id="title" value={title} onChange={handleTitleChange} />
-
-      <label htmlFor="content">Content:</label>
-      <textarea
-        id="content"
-        value={content}
-        onChange={handleContentChange}
-        style={{ width: '75%', height: '75vh' }}
-      />
-
-      <button onClick={handleSend}>Send</button>
-
-      {reply && (
-        <div>
-          <h2>ChatGPT Reply:</h2>
-          <p>{reply}</p>
+    <div className="container container-sm p-1">
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <a href="">Link</a>
+          <h2>AutoCreate Cards</h2>
+          <label htmlFor="">Add your text here: </label>
+          <input
+            className="shadow-sm"
+            type="text"
+            placeholder="Enter text"
+            value={prompt}
+            onChange={handlePrompt}
+            style={{width:"75vw", height:"75vh"}}
+          />
         </div>
-      )}
+      </form>
     </div>
   );
-};
-
-export default AutoCreate;
+}

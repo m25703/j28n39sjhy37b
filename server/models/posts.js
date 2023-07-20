@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Posts = sequelize.define("Posts", {
     id: { 
       type: DataTypes.INTEGER, 
-      autolikeIncrement: true, 
+      autointeractIncrement: true, 
       primaryKey: true },
     question: {
       type: DataTypes.STRING,
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     username: {
       type: DataTypes.STRING,
-      allowNull: false,
+      defaultValue: "null",
     },
     topic: {
       type: DataTypes.STRING,
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     //   onDelete: "cascade",
     // });
 
-    Posts.hasMany(models.Likes, {
+    Posts.hasMany(models.interacts, {
       onDelete: "cascade",
     });
   };

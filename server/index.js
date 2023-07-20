@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-// const { createProxyMiddleware } = require("http-proxy-middleware");
 
 app.use(express.json());
 app.use(cors());
@@ -12,8 +11,8 @@ const postRouter = require("./routes/Posts");
 app.use("/posts", postRouter);
 const usersRouter = require("./routes/Users");
 app.use("/auth", usersRouter);
-const likesRouter = require("./routes/Likes");
-app.use("/likes", likesRouter);
+const interactsRouter = require("./routes/interacts");
+app.use("/interacts", interactsRouter);
 
 // app.use(
 //   "/api", // Update the endpoint URL to "/api"

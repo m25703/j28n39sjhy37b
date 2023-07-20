@@ -5,14 +5,13 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 
-function CreatePost() {
+function CreateCard() {
   const { authState } = useContext(AuthContext);
 
   let history = useHistory();
   const initialValues = {
     question: "",
-    answer: "",
-    username: "null"
+    answer: ""
   };
 
   useEffect(() => {
@@ -31,12 +30,13 @@ function CreatePost() {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
+        console.log(data);
         history.push("/");
       });
   };
 
   return (
-    <div className="createPostPage">
+    <div className="CreateCardPage">
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
@@ -47,7 +47,7 @@ function CreatePost() {
           <ErrorMessage name="question" component="span" />
           <Field
             autoComplete="off"
-            id="inputCreatePost"
+            id="inputCreateCard"
             name="question"
             placeholder="(Ex. Question...)"
           />
@@ -55,16 +55,16 @@ function CreatePost() {
           <ErrorMessage name="answer" component="span" />
           <Field
             autoComplete="off"
-            id="inputCreatePost"
+            id="inputCreateCard"
             name="answer"
             placeholder="(Ex. Post...)"
           />
 
-          <button type="submit"> Create Post</button>
+          <button type="submit"> Create Card</button>
         </Form>
       </Formik>
     </div>
   );
 }
 
-export default CreatePost;
+export default CreateCard;

@@ -14,7 +14,7 @@ const Card = ({ question, answer }) => {
           className="card-question"
           style={{
             marginTop: '1vw',
-            height: '9vw',
+            minHeight: '9vw',
             textAlign: 'center',
             color: 'white',
             fontFamily:
@@ -27,7 +27,7 @@ const Card = ({ question, answer }) => {
         </div>
         <div
           style={{
-            height: '10.5vw',
+            minHeight: '10.5vw',
             width: '80%',
             textAlign: 'center',
             verticalAlign: 'middle',
@@ -38,13 +38,13 @@ const Card = ({ question, answer }) => {
         >
           {showAnswer && <div className="card-answer" style={{verticalAlign: 'middle'}}>{answer}</div>}
         </div>
-        <div style={{ height: '4vw' }}>
+        <div>
           <button
             className="card-toggle"
             onClick={toggleAnswer}
             style={{
               appearance: 'none',
-              backgroundColor: '#000000',
+              backgroundColor: '#0a0a0a',
               borderRadius: '2vw',
               borderStyle: 'none',
               color: '#FFFFFF',
@@ -53,7 +53,6 @@ const Card = ({ question, answer }) => {
                 'Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"',
               fontSize: '2vw',
               lineHeight: 'normal',
-              minHeight: '3vw',
               padding:'0.75vw 1.66vw 0.66vw',
               minWidth: '0',
               outline: 'none',
@@ -63,6 +62,7 @@ const Card = ({ question, answer }) => {
               userSelect: 'none',
               touchAction: 'manipulation',
               width: '16vw',
+              margin:'0.75vw',
               willChange: 'transform'
             }}
           >
@@ -75,3 +75,42 @@ const Card = ({ question, answer }) => {
 };
 
 export default Card;
+
+
+
+// return (
+//   <div>
+//     {(listOfPosts.length > 0) ? (
+//       <div>
+//       <div
+//         className="card"
+//         style={{
+//           minHeight: '32vw',
+//           width: '72vw',
+//           backgroundColor: 'deepskyblue',
+//           display: 'flex',
+//           justifyContent: 'center',
+//           alignItems: 'center',
+//           borderRadius:'4vw'
+//         }}
+//       >
+//         {}
+//         <Card
+          
+//           question={listOfPosts[currentPostIndex].question}
+//           answer={listOfPosts[currentPostIndex].answer}
+//         />
+//       </div>
+//       <button onClick={goToNextPost}>Next Post</button>
+//       </div>
+//     ) : (
+//       <div>
+//         <h3>{currentPostIndex} {listOfPosts.length} Congratulations! You're done studying.</h3>
+//       </div>
+//     )}
+//   </div>
+// );
+
+// }
+
+// export default Home;
