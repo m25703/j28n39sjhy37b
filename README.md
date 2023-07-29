@@ -61,8 +61,7 @@ Once you have completed the installation steps, the application will be up and r
 For AWS deployment, use environment variables to store sensitive information like database credentials. Replace database credentials in `config.json` with environment variables.
 
 ### AWS RDS Configuration
-Create a new SQL database on AWS RDS (Amazon Relational Database Service).
-In the AWS RDS dashboard, you will find the endpoint, username, password, and database name for your newly created RDS instance.
+Use an SQL database on AWS RDS (Amazon Relational Database Service). In the AWS RDS dashboard, you will find the endpoint, username, password, and database name for your newly created RDS instance.
 To utilize the environment variables for database configuration, modify `index.js` with the appropriate changes. Replace the hard-coded values for database configuration with the corresponding environment variables.
 
 ### AWS Environment Variables
