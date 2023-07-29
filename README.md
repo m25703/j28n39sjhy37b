@@ -72,7 +72,7 @@ Ensure that the security group associated with your AWS RDS instance allows inco
 
 ## Contributing
 
-We welcome contributions to improve the Project Name. If you have any ideas, bug fixes, or feature requests, please submit an issue or a pull request. We appreciate your feedback and support.
+Contributions are welcome to improve this project. If you have any ideas, bug fixes, or feature requests, please submit an issue or a pull request. Feedback and support is appreciated.
 
 ## License
 
