@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+// require("dotenv").config(); // <- Load environment variables from .env file
 
 app.use(express.json());
 app.use(cors());
@@ -13,17 +14,6 @@ const usersRouter = require("./routes/Users");
 app.use("/auth", usersRouter);
 const interactsRouter = require("./routes/interacts");
 app.use("/interacts", interactsRouter);
-
-// app.use(
-//   "/api", // Update the endpoint URL to "/api"
-//   createProxyMiddleware({
-//     target: "https://api.chatgpt.com",
-//     changeOrigin: true,
-//     pathRewrite: {
-//       "^/api": "/v1/chat/completions",
-//     },
-//   })
-// );
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
