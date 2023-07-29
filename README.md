@@ -65,7 +65,7 @@ Use an SQL database on AWS RDS (Amazon Relational Database Service). In the AWS 
 To utilize the environment variables for database configuration, modify `index.js` with the appropriate changes. Replace the hard-coded values for database configuration with the corresponding environment variables.
 
 ### AWS Environment Variables
-In the AWS deployment environment (e.g., AWS Elastic Beanstalk), set the environment variables `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, and `DB_HOST` to the appropriate values for your AWS RDS instance.
+In the AWS deployment environment, set the environment variables `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, and `DB_HOST` to the appropriate values for your AWS RDS instance.
 
 ### Security Group
 Ensure that the security group associated with your AWS RDS instance allows incoming connections from your backend server's instance. This is necessary to establish a connection between your backend server and the RDS database.
