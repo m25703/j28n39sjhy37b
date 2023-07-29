@@ -1,5 +1,3 @@
-# Project Name
-
 This readme file will guide you through the installation process and getting this application up and running on your local machine.
 
 ## Prerequisites
@@ -65,17 +63,3 @@ We welcome contributions to improve the Project Name. If you have any ideas, bug
 ## License
 
 The Project Name is licensed under the [MIT License](LICENSE). Feel free to modify and distribute this project as per the license terms.
-
-## Acknowledgements
-
-The following resources, libraries, and frameworks that made this project possible:
-
-- [SQL](https://www.sql.org/)
-- [Node.js](https://nodejs.org/)
-- [Express.js](https://expressjs.com/)
-- [React](https://reactjs.org/)
-- [React Router DOM](https://reactrouter.com/)
-- [Axios](https://axios-http.com/)
-- [Yup](https://github.com/jquense/yup)
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-- [Sequelize](https://sequelize.org/)
