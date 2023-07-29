@@ -56,6 +56,21 @@ Once you have completed the installation steps, the application will be up and r
 
 - **Port Conflict**: If port `3000` is already in use on your machine, you can specify a different port by modifying the client's configuration file. Open the `client/package.json` file and update the `"start"` script to include the desired port number.
 
+## AWS Compatibility 
+
+For AWS deployment, use environment variables to store sensitive information like database credentials. Replace database credentials in `config.json` with environment variables.
+
+### AWS RDS Configuration
+Create a new SQL database on AWS RDS (Amazon Relational Database Service).
+In the AWS RDS dashboard, you will find the endpoint, username, password, and database name for your newly created RDS instance.
+To utilize the environment variables for database configuration, modify `index.js` with the appropriate changes. Replace the hard-coded values for database configuration with the corresponding environment variables.
+
+### AWS Environment Variables
+In the AWS deployment environment (e.g., AWS Elastic Beanstalk), set the environment variables `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, and `DB_HOST` to the appropriate values for your AWS RDS instance.
+
+### Security Group
+Ensure that the security group associated with your AWS RDS instance allows incoming connections from your backend server's instance. This is necessary to establish a connection between your backend server and the RDS database.
+
 ## Contributing
 
 We welcome contributions to improve the Project Name. If you have any ideas, bug fixes, or feature requests, please submit an issue or a pull request. We appreciate your feedback and support.
